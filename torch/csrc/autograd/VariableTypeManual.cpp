@@ -269,7 +269,12 @@ Tensor & detach_(Tensor & self) {
                    "of detach_(). Alternatively, create this view with an "
                    "`unsafe_` version of the function that produced it.");
     } else {
-      AT_ERROR("Can't detach views in-place. Use detach() instead");
+      AT_ERROR("Can't detach views in-place. Use detach() instead."
+               "If you are using DistributedDataParallel API for "
+               "training, we've made grads be views of allReduce "
+               "buffers, so you can not detach_ the grads directly."
+               "Fixing it by referring to how zero_grad is defined "
+               "inside optimizer.");
     }
   }
   // I think the choice here is conservative.  In principle, doing
