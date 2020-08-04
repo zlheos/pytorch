@@ -7,6 +7,14 @@ class TestForeach(TestCase):
     H = 20
     W = 20
 
+    def get_test_data(self, device, dtype):
+        tensors = []
+        for _ in range(self.N):
+            tensors.append(torch.ones(self.H, self.W, device=device, dtype=dtype))
+
+        return tensors
+
+    # Ops with scalar
     @dtypes(*torch.testing.get_all_dtypes())
     def test_add_scalar__same_size_tensors(self, device, dtype):
         tensors = [torch.zeros(self.H, self.W, device=device, dtype=dtype) for n in range(self.N)]
@@ -171,6 +179,7 @@ class TestForeach(TestCase):
         for t in tensors:
             self.assertEqual(t, torch.ones(self.H, self.W, device=device, dtype=dtype).div(2))
 
+    # Ops with list
     @dtypes(*torch.testing.get_all_dtypes())
     def test_bin_op_list_same_size_tensors(self, device, dtype):
         if dtype == torch.bool:
