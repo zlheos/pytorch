@@ -5681,6 +5681,7 @@
   dispatch:
     CPU: glu_out
     CUDA: legacy::cuda::_thnn_glu_forward_out
+    QuantizedCPU: glu_quantized_cpu_out
 
 - func: glu(Tensor self, int dim=-1) -> Tensor
   use_c10_dispatcher: full
@@ -5688,6 +5689,7 @@
   dispatch:
     CPU: glu
     CUDA: legacy::cuda::_thnn_glu_forward
+    QuantizedCPU: glu_quantized_cpu
 
 - func: glu_backward.grad_input(Tensor grad_output, Tensor self, int dim, *, Tensor(a!) grad_input) -> Tensor(a!)
   python_module: nn
